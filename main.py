@@ -14,7 +14,7 @@ area1=[(120,470),(90,510),(330,550),(350,505)]
 area2=[(80,530),(50,570),(310,610),(330,570)]
 
 
-def RGB(event, x, y, flags, param):
+def RGB(event, x, y):
     if event == cv2.EVENT_MOUSEMOVE :  
         colorsBGR = [x, y]
         print(colorsBGR)
@@ -29,7 +29,6 @@ cap=cv2.VideoCapture('video10.mp4')
 my_file = open("coco.txt", "r")
 data = my_file.read()
 class_list = data.split("\n") 
-#print(class_list)
 
 count=0
 tracker = Tracker()
@@ -44,10 +43,10 @@ while True:
     if not ret:
         break
     count += 1
-    if count % 2 != 0:
+    if count % 2 != 0:  # chỉ xử lý khung hình chẵn để để giảm tải tăng hiệu suất làm việc
         continue
-    #Kích thước video
-    frame=cv2.resize(frame,(480 ,640))
+   
+    frame=cv2.resize(frame,(480 ,640)) #Kích thước video
     results=model.predict(frame)
     a=results[0].boxes.data
     px=pd.DataFrame(a).astype("float")
@@ -71,14 +70,14 @@ while True:
         results = cv2.pointPolygonTest(np.array(area2,np.int32),(((x4+x3)//2,y4)),False) #chấm tròn vào trong khu vực hai thì reutrn 1.0
         cv2.rectangle(frame,(x3,y3),(x4,y4),(0,255,0),2) # Vẽ hình chữ nhật
         cv2.circle(frame,((x4+x3)//2 ,y4),5,(255,0,255),-1) # vẽ chấm tròn nhỏ phía dưới khung
-        cv2.putText(frame,str(id),(x3,y3),cv2.FONT_HERSHEY_COMPLEX,(0.5),(255,255,255),1)#Vẽ id người
+        cv2.putText(frame,str(f"ID: {id}"),(x3,y3),cv2.FONT_HERSHEY_COMPLEX,(0.5),(255,255,255),1)#Vẽ id người
         if results >= 0 :  # 1 > 0 => true
             people_upping[id] = (x4,y4)
             
         if id in people_upping :
             results1 = cv2.pointPolygonTest(np.array(area1,np.int32),(((x4+x3)//2,y4)),False)
             if results1 >= 0 :
-                upping.add(id)
+                upping.add(id) #Thêm id vào upping
                 
         ##people down
         results2 = cv2.pointPolygonTest(np.array(area1,np.int32),(((x4+x3)//2,y4)),False) #chấm tròn vào trong khu vực 1 thì reutrn 1.0
@@ -100,13 +99,13 @@ while True:
 
     #print count people
     print(f"di len: {len(upping)}")
-    print(f"di len: {len(downing)}")
+    print(f"di xuong: {len(downing)}")
     up = (len(upping))
     down =(len(downing))
     #Vẽ số người đi lên, xuống lên video
     cv2.putText(frame,str(f"Di len: {up}"),(20,40),cv2.FONT_HERSHEY_COMPLEX,(0.7),(0,255,0),2)
     cv2.putText(frame,str(f"Di xuong: {down}"),(20,80),cv2.FONT_HERSHEY_COMPLEX,(0.7),(0,255,0),2)
-    
+    cv2.putText(frame,str(f"Thoat: ESC"),(340,40),cv2.FONT_HERSHEY_COMPLEX,(0.7),(0,255,0),2)
     
     cv2.imshow("RGB", frame)
     if cv2.waitKey(1)&0xFF==27:
