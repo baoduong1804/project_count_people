@@ -1,4 +1,7 @@
 ### GIẢI THÍCH CODE
+Thấy khó đọc quá ae ấn phía bên code nha
+![alt text](img/image1.png)
+
 
 ### Cách download và chạy code:
 - B1 : Vào link source code  : https://github.com/baoduong1804/project_count_people
@@ -7,7 +10,6 @@
 - B4 : Ấn chuột phải xong chọn Open in Terminal  (Nếu chưa tải IDE : Python thì ae lên gg tải nha)
 - B4 : Dán vào terminal (tải thư viện) :  pip install opencv-python opencv-python-headless pandas numpy ultralytics norfair
 - B5 : Tải thư viện xong --> Chạy code nhập: py main.py     ---> Nhấn phím ESC để thoát chương trình.
-
 
 
 ### Cách thức hoạt động 
@@ -149,4 +151,4 @@ Youtube: https://www.youtube.com/watch?v=tbscP_d11Zw&list=LL&index=2&t=1768s
 - In kết quả ra màn hình
 
 Hình minh họa:
-![alt text](img/image.png)
+![alt text](img/image2.png)
